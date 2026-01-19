@@ -73,21 +73,27 @@
         .hero {
             margin-top: 100px;
             min-height: 90vh;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
             align-items: center;
+            gap: 2rem;
             position: relative;
             overflow: hidden;
+            max-width: 1400px;
+            margin: 100px auto 0;
+            padding: 0 2rem;
         }
         
         .hero::before {
             content: '';
             position: absolute;
             top: -50%;
-            right: -50%;
-            width: 100%;
+            left: -20%;
+            width: 80%;
             height: 200%;
             background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
+            pointer-events: none;
         }
         
         @keyframes pulse {
@@ -96,16 +102,13 @@
         }
         
         .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
             position: relative;
             z-index: 1;
         }
         
         h1 {
             font-family: 'Bebas Neue', cursive;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(3rem, 6vw, 5rem);
             line-height: 1.1;
             margin-bottom: 1.5rem;
             letter-spacing: 2px;
@@ -119,25 +122,29 @@
         }
         
         .hero-subtitle {
-            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 3rem;
-            max-width: 600px;
+            max-width: 500px;
         }
         
         /* Phone Mockup */
         .phone-mockup {
-            position: absolute;
-            right: 10%;
-            top: 50%;
-            transform: translateY(-50%);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .phone-container {
             width: 300px;
             animation: float 6s ease-in-out infinite;
         }
         
         @keyframes float {
-            0%, 100% { transform: translateY(-50%); }
-            50% { transform: translateY(calc(-50% - 20px)); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         
         .phone-frame {
@@ -151,12 +158,32 @@
         .phone-screen {
             border-radius: 32px;
             overflow: hidden;
-            background: #06b6d4;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .phone-screen img {
             width: 100%;
             display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .phone-screen img.loaded {
+            opacity: 1;
+        }
+        
+        .phone-loading {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
         
         /* Features Section */
@@ -282,8 +309,17 @@
         
         /* Responsive */
         @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+            
             .phone-mockup {
-                display: none;
+                order: -1;
+            }
+            
+            .phone-container {
+                max-width: 250px;
             }
             
             .step {
@@ -320,9 +356,14 @@
             </div>
             
             <div class="phone-mockup">
-                <div class="phone-frame">
-                    <div class="phone-screen">
-                        <img src="phone-preview.png" alt="Dimer App" id="phone-img">
+                <div class="phone-container">
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <div class="phone-loading">Dimer App</div>
+                            <img src="screenshot1.png" alt="Dimer App Screenshot 1" data-index="0">
+                            <img src="screenshot2.png" alt="Dimer App Screenshot 2" data-index="1">
+                            <img src="screenshot3.png" alt="Dimer App Screenshot 3" data-index="2">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -411,25 +452,51 @@
     </footer>
 
     <script>
-        // Cycle through screenshots
-        const screenshots = [
-            'screenshot1.png',
-            'screenshot2.png',
-            'screenshot3.png'
-        ];
-        
+        // Preload and cycle through screenshots
+        const screenshots = document.querySelectorAll('.phone-screen img');
+        const loadingText = document.querySelector('.phone-loading');
         let currentIndex = 0;
-        const phoneImg = document.getElementById('phone-img');
+        let imagesLoaded = 0;
         
-        if (phoneImg) {
+        // Show first image when it loads
+        screenshots.forEach((img, index) => {
+            img.addEventListener('load', () => {
+                imagesLoaded++;
+                if (index === 0) {
+                    img.classList.add('loaded');
+                    if (loadingText) loadingText.style.display = 'none';
+                }
+            });
+            
+            // Force reload in case cached
+            if (img.complete) {
+                imagesLoaded++;
+                if (index === 0) {
+                    img.classList.add('loaded');
+                    if (loadingText) loadingText.style.display = 'none';
+                }
+            }
+        });
+        
+        // Start cycling after all images load
+        function startCycling() {
             setInterval(() => {
+                screenshots[currentIndex].classList.remove('loaded');
                 currentIndex = (currentIndex + 1) % screenshots.length;
-                phoneImg.style.opacity = '0';
-                setTimeout(() => {
-                    phoneImg.src = screenshots[currentIndex];
-                    phoneImg.style.opacity = '1';
-                }, 300);
+                screenshots[currentIndex].classList.add('loaded');
             }, 4000);
+        }
+        
+        // Wait for all images to load before cycling
+        if (imagesLoaded === screenshots.length) {
+            setTimeout(startCycling, 2000);
+        } else {
+            let checkInterval = setInterval(() => {
+                if (imagesLoaded === screenshots.length) {
+                    clearInterval(checkInterval);
+                    setTimeout(startCycling, 2000);
+                }
+            }, 100);
         }
     </script>
 </body>
