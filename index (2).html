@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimer - White-Label Fitness Community for Gyms</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Bebas+Neue&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+        
+        /* Phone Mockup */
+        .phone-mockup {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%); }
+            50% { transform: translateY(calc(-50% - 20px)); }
+        }
+        
+        .phone-frame {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(6, 182, 212, 0.2);
+        }
+        
+        .phone-screen {
+            border-radius: 32px;
+            overflow: hidden;
+            background: #06b6d4;
+        }
+        
+        .phone-screen img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: 2px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(15, 23, 42, 0.5));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(6, 182, 212, 0.6);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.05));
+        }
+        
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .step-number {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 6rem;
+            color: rgba(6, 182, 212, 0.2);
+            min-width: 120px;
+        }
+        
+        .step-content h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 2rem;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .phone-mockup {
+                display: none;
+            }
+            
+            .step {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            
+            .step-number {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="dimer-logo-clean.png" alt="Dimer" style="height: 60px; width: auto;">
+            <a href="https://calendly.com/dimer-fitness/15min" target="_blank" class="cta-button">Get Started</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>
+                    <span class="gradient-text">White-Label</span><br>
+                    Fitness Community<br>
+                    For Your Gym
+                </h1>
+                <p class="hero-subtitle">
+                    Increase member retention and build community with our workout partner matching platform.
+                </p>
+                <a href="https://calendly.com/dimer-fitness/15min" target="_blank" class="cta-button">Schedule Demo</a>
+            </div>
+            
+            <div class="phone-mockup">
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <img src="phone-preview.png" alt="Dimer App" id="phone-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">Why Gym Owners Choose Dimer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Increase Retention</h3>
+                    <p>Members who work out with partners are 3x more likely to maintain their membership.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Your Branding</h3>
+                    <p>Fully white-labeled with your gym's colors, logo, and branding. It's YOUR community platform.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Zero Setup</h3>
+                    <p>We handle all the tech. You just display QR codes in your gym and watch engagement soar.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Member Insights</h3>
+                    <p>See which members are most engaged, popular workout times, and community growth metrics.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💪</div>
+                    <h3>Build Community</h3>
+                    <p>Transform your gym from a place with equipment to a thriving fitness community.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Launch in Days</h3>
+                    <p>From first call to member signups in under a week. No complex integrations required.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>We Create Your Branded Page</h3>
+                        <p>We build a custom landing page with your gym's branding, colors, and logo. Your members scan a QR code to join.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Display QR Codes</h3>
+                        <p>Print QR codes (we provide them) and place them at your front desk, locker rooms, and workout areas.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Members Connect & Engage</h3>
+                        <p>Your members find workout partners, schedule sessions together, and build lasting friendships at YOUR gym.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Build Your Community?</h2>
+            <p>Schedule a 15-minute demo and see how Dimer can transform your gym's member engagement.</p>
+            <a href="https://calendly.com/dimer-fitness/15min" target="_blank" class="cta-button">Schedule Free Demo</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Dimer Fitness. All rights reserved.</p>
+        <p>Contact: dimer.fitness@gmail.com</p>
+    </footer>
+
+    <script>
+        // Cycle through screenshots
+        const screenshots = [
+            'screenshot1.png',
+            'screenshot2.png',
+            'screenshot3.png'
+        ];
+        
+        let currentIndex = 0;
+        const phoneImg = document.getElementById('phone-img');
+        
+        if (phoneImg) {
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % screenshots.length;
+                phoneImg.style.opacity = '0';
+                setTimeout(() => {
+                    phoneImg.src = screenshots[currentIndex];
+                    phoneImg.style.opacity = '1';
+                }, 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
